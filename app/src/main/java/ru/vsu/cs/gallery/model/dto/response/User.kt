@@ -1,5 +1,7 @@
 package ru.vsu.cs.gallery.model.dto.response
 
+import java.io.Serializable
+
 data class User(
     val id: String,
     val phone: String,
@@ -9,5 +11,4 @@ data class User(
     val avatar: String,
     val city: String,
     val about: String
-) {
-}
+) : Serializable

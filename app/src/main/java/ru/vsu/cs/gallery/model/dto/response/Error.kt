@@ -1,4 +1,8 @@
 package ru.vsu.cs.gallery.model.dto.response
 
-data class Error(val code: Int, val reason: String) {
-}
+import java.io.Serializable
+
+data class Error(
+    val code: Int,
+    val reason: String
+) : Serializable

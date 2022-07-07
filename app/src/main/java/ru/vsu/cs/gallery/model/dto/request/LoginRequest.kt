@@ -1,4 +1,8 @@
 package ru.vsu.cs.gallery.model.dto.request
 
-data class LoginRequest(val phone: String, val password: String ) {
-}
+import java.io.Serializable
+
+data class LoginRequest(
+    val phone: String,
+    val password: String
+    ) : Serializable
