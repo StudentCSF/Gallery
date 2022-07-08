@@ -40,13 +40,15 @@
         android:inputType="textPassword"
         android:maxLength="255"
         android:paddingStart="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/login_et" />
+        app:layout_constraintTop_toBottomOf="@+id/login_et"
+        tools:ignore="RtlSymmetry" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/black"
         android:text="@string/enter_btn"
+        android:onClick="login"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
