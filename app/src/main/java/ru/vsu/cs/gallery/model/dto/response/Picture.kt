@@ -1,11 +1,12 @@
 package ru.vsu.cs.gallery.model.dto.response
 
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class Picture(
-    val id: String,
-    val title: String,
-    val content: String,
-    val photoUrl: String,
-    val publicationDate: Int
+    @SerializedName("id") val id: String,
+    @SerializedName("title") val title: String,
+    @SerializedName("content") val content: String,
+    @SerializedName("photoUrl") val photoUrl: String,
+    @SerializedName("publicationDate") val publicationDate: Int
 ) : Serializable

@@ -9,5 +9,5 @@ import ru.vsu.cs.gallery.model.dto.response.AuthInfo
 interface LoginApi {
 
     @POST("auth/login")
-    fun login(@Body request: LoginRequest): Call<AuthInfo>
+    suspend fun login(@Body request: LoginRequest): AuthInfo
 }

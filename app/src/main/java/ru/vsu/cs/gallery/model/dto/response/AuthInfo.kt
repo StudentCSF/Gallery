@@ -1,8 +1,9 @@
 package ru.vsu.cs.gallery.model.dto.response
 
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class AuthInfo(
-    val token: String,
-    val user_info: User
+    @SerializedName("token") val token: String,
+    @SerializedName("user_info") val userInfo: User
 ) : Serializable

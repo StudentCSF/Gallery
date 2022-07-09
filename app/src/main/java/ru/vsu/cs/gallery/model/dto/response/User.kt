@@ -1,14 +1,15 @@
 package ru.vsu.cs.gallery.model.dto.response
 
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class User(
-    val id: String,
-    val phone: String,
-    val email: String,
-    val firstName: String,
-    val lastName: String,
-    val avatar: String,
-    val city: String,
-    val about: String
+    @SerializedName("id") val id: String,
+    @SerializedName("phone") val phone: String,
+    @SerializedName("email") val email: String,
+    @SerializedName("firstName") val firstName: String,
+    @SerializedName("lastName") val lastName: String,
+    @SerializedName("avatar") val avatar: String,
+    @SerializedName("city") val city: String,
+    @SerializedName("about") val about: String
 ) : Serializable
