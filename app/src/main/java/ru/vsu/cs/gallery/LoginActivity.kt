@@ -1,26 +1,20 @@
 package ru.vsu.cs.gallery
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
-import androidx.lifecycle.lifecycleScope
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import ru.vsu.cs.gallery.api.LoginApi
 import ru.vsu.cs.gallery.config.AppConfig
 import ru.vsu.cs.gallery.model.dto.request.LoginRequest
 import ru.vsu.cs.gallery.model.dto.response.AuthInfo
-import ru.vsu.cs.gallery.api.LoginApi
-import java.lang.Exception
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -38,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
         lTil: TextInputLayout,
         pTil: TextInputLayout
     ): Boolean {
-        var error: Boolean = false
+        var error = false
 
 //        val p: Pattern = Pattern.compile("[+]?[78]?[() 0-9-]+")
         val p: Pattern = Pattern.compile("[0-9]{10}")
@@ -74,12 +68,12 @@ class LoginActivity : AppCompatActivity() {
 
         val api: LoginApi = AppConfig.LOGIN_API
 
-        val lTil: TextInputLayout = findViewById<TextInputLayout>(R.id.login_til)
+        val lTil = findViewById<TextInputLayout>(R.id.login_til)
         lTil.isErrorEnabled = false
         val login: String = findViewById<EditText>(R.id.login_et).text.toString()
 
 
-        val pTil: TextInputLayout = findViewById<TextInputLayout>(R.id.password_til)
+        val pTil  = findViewById<TextInputLayout>(R.id.password_til)
         pTil.isErrorEnabled = false
         val password: String = findViewById<EditText>(R.id.password_et).text.toString()
 
@@ -87,37 +81,31 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-        lifecycleScope.launch {
+        val call: Call<AuthInfo> = api.login(
+            LoginRequest(
+                phone = lTil.prefixText.toString() + login,
+                password = password
+            )
+        )
+        call.enqueue(
+            object : Callback<AuthInfo> {
+                override fun onResponse(call: Call<AuthInfo>, response: Response<AuthInfo>) {
+                    if (response.isSuccessful) {
+                        info = response.body()
+                        Log.i("info", info.toString())
+                    } else {
+                        Toast.makeText(
+                            applicationContext,
+                            R.string.user_not_found,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
 
-            val request: Deferred<AuthInfo> = async {
-                api.login(
-                    LoginRequest(
-                        phone = lTil.prefixText.toString() + login,
-                        password = password
-                    )
-                )
+                override fun onFailure(call: Call<AuthInfo>, t: Throwable) {
+                }
             }
-
-            Log.i("res", request.await().toString())
-
-        }
-
+        )
         this.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-
-//        call.enqueue(
-//            object : Callback<AuthInfo> {
-//                override fun onResponse(call: Call<AuthInfo>, response: Response<AuthInfo>) {
-//                    if (response.isSuccessful) {
-//                        info = response.body()
-//                        Log.i("info", info.toString())
-//                    } else {
-//
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<AuthInfo>, t: Throwable) {
-//                }
-//            }
-//        )
     }
 }
