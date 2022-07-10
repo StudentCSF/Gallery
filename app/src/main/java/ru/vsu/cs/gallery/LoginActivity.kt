@@ -14,7 +14,7 @@ import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import ru.vsu.cs.gallery.api.LoginApi
+import ru.vsu.cs.gallery.api.UserApi
 import ru.vsu.cs.gallery.config.AppConfig
 import ru.vsu.cs.gallery.model.dto.request.LoginRequest
 import ru.vsu.cs.gallery.model.dto.response.AuthInfo
@@ -69,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
         )
 
-        val api: LoginApi = AppConfig.LOGIN_API
+        val api: UserApi = AppConfig.USER_API
 
         val lTil = findViewById<TextInputLayout>(R.id.login_til)
         lTil.isErrorEnabled = false
@@ -106,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
                             .apply {
                                 putString(
                                     AppConfig.TOKEN,
-                                    info?.token
+                                    info?.token?.let { buildToken(it) }
                                 )
                                 putString(
                                     AppConfig.USER,
@@ -136,5 +136,9 @@ class LoginActivity : AppCompatActivity() {
             }
         )
         this.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    }
+
+    fun buildToken(token: String): String {
+        return getString(R.string.token_prefix) + " " + token
     }
 }

@@ -17,4 +17,7 @@
     <string name="quit_question">Вы точно хотите выйти из приложения?</string>
     <string name="quit_no">Нет</string>
     <string name="quit_yes">Да, точно</string>
+    <string name="token_prefix">Token</string>
+    <string name="exit_failed">Не удалось выйти, попробуйте еще раз</string>
+    <string name="exit_failed_by_inet">Отсутствует интернет-соединение. Попробуйте позже</string>
 </resources>

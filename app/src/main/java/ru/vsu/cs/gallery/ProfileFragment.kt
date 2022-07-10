@@ -3,14 +3,19 @@ package ru.vsu.cs.gallery
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import coil.load
 import com.google.gson.Gson
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import ru.vsu.cs.gallery.config.AppConfig
 import ru.vsu.cs.gallery.model.dto.response.User
 
@@ -27,7 +32,7 @@ class ProfileFragment : AppCompatActivity(), ExitDialogFragment.ExitDialogFragme
             MODE_PRIVATE
         )
 
-        if (!sharPref.contains(AppConfig.TOKEN)) {
+        if (!sharPref.contains(AppConfig.TOKEN) || !sharPref.contains(AppConfig.USER)) {
             this.startActivity(
                 Intent(this, LoginActivity::class.java)
             )
@@ -57,15 +62,44 @@ class ProfileFragment : AppCompatActivity(), ExitDialogFragment.ExitDialogFragme
     }
 
     private fun logout() {
-        getSharedPreferences(
+        val sharPref = getSharedPreferences(
             AppConfig.APP_PREFERENCES,
             MODE_PRIVATE
-        ).edit().apply {
-            remove(AppConfig.TOKEN)
-            remove(AppConfig.USER)
-            apply()
-        }
+        )
 
+        val userApi = AppConfig.USER_API
+
+        val param: String = sharPref.getString(AppConfig.TOKEN, "").toString()
+        val call: Call<Void> = userApi.logout(param)
+
+        call.enqueue(
+            object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    if (!response.isSuccessful) {
+                        Toast.makeText(
+                            applicationContext,
+                            R.string.exit_failed,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    sharPref.edit()
+                        .apply {
+                            remove(AppConfig.TOKEN)
+                            remove(AppConfig.USER)
+                            apply()
+                        }
+                    Log.i("logout", response.code().toString())
+                }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Toast.makeText(
+                        applicationContext,
+                        R.string.exit_failed_by_inet,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        )
     }
 
     fun showDialog(view: View) {

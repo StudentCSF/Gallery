@@ -1,13 +1,11 @@
 package ru.vsu.cs.gallery
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import java.lang.ClassCastException
 
 class ExitDialogFragment : DialogFragment() {
 
@@ -15,7 +13,7 @@ class ExitDialogFragment : DialogFragment() {
         fun onDialogPositiveClick(dialog: DialogFragment?)
     }
 
-    var listener: ExitDialogFragmentListener? = null
+    private var listener: ExitDialogFragmentListener? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
