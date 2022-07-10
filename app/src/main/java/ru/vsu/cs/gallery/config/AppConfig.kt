@@ -10,6 +10,10 @@ class AppConfig {
     companion object {
         private const val BASE_URL: String = "https://pictures.chronicker.fun/api/"
 
+        const val APP_PREFERENCES: String = "app"
+        const val TOKEN: String = "token"
+        const val USER: String = "user"
+
         private val RETROFIT: Retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

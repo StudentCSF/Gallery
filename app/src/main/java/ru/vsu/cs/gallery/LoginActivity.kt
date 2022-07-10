@@ -1,5 +1,7 @@
 package ru.vsu.cs.gallery
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -73,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
         val login: String = findViewById<EditText>(R.id.login_et).text.toString()
 
 
-        val pTil  = findViewById<TextInputLayout>(R.id.password_til)
+        val pTil = findViewById<TextInputLayout>(R.id.password_til)
         pTil.isErrorEnabled = false
         val password: String = findViewById<EditText>(R.id.password_et).text.toString()
 
@@ -89,10 +92,36 @@ class LoginActivity : AppCompatActivity() {
         )
         call.enqueue(
             object : Callback<AuthInfo> {
+                @SuppressLint("CommitPrefEdits")
                 override fun onResponse(call: Call<AuthInfo>, response: Response<AuthInfo>) {
                     if (response.isSuccessful) {
                         info = response.body()
+
                         Log.i("info", info.toString())
+
+                        getSharedPreferences(
+                            AppConfig.APP_PREFERENCES,
+                            MODE_PRIVATE
+                        ).edit()
+                            .apply {
+                                putString(
+                                    AppConfig.TOKEN,
+                                    info?.token
+                                )
+                                putString(
+                                    AppConfig.USER,
+                                    Gson().toJson(info?.userInfo).toString()
+                                )
+                                apply()
+                            }
+
+                        startActivity(
+                            Intent(
+                                applicationContext, ProfileFragment::class.java
+                            ).apply {
+                                putExtra("user", info?.userInfo)
+                            }
+                        )
                     } else {
                         Toast.makeText(
                             applicationContext,

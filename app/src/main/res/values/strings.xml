@@ -5,8 +5,16 @@
     <string name="login_hint">Логин</string>
     <string name="password_hint">Пароль</string>
     <string name="enter_btn">Войти</string>
+    <string name="logout_btn">Выйти</string>
     <string name="empty_field">Поле не может быть пустым</string>
     <string name="incorrect_login">Не верный формат номера телефона</string>
     <string name="incorrect_password">Пароль должен быть от 6 до 255 символов</string>
     <string name="user_not_found">Логин или пароль введен неправильно</string>
+    <string name="profile">Профиль</string>
+    <string name="city">Город</string>
+    <string name="phone">Телефон</string>
+    <string name="email">Почта</string>
+    <string name="quit_question">Вы точно хотите выйти из приложения?</string>
+    <string name="quit_no">Нет</string>
+    <string name="quit_yes">Да, точно</string>
 </resources>
