@@ -20,4 +20,5 @@
     <string name="token_prefix">Token</string>
     <string name="exit_failed">Не удалось выйти, попробуйте еще раз</string>
     <string name="exit_failed_by_inet">Отсутствует интернет-соединение. Попробуйте позже</string>
+    <string name="gallery">Галерея</string>
 </resources>

@@ -34,7 +34,10 @@ class ProfileFragment : AppCompatActivity(), ExitDialogFragment.ExitDialogFragme
 
         if (!sharPref.contains(AppConfig.TOKEN) || !sharPref.contains(AppConfig.USER)) {
             this.startActivity(
-                Intent(this, LoginActivity::class.java)
+                Intent(
+                    this,
+                    LoginActivity::class.java
+                 )
             )
             this.finish()
             return
@@ -109,7 +112,10 @@ class ProfileFragment : AppCompatActivity(), ExitDialogFragment.ExitDialogFragme
     override fun onDialogPositiveClick(dialog: DialogFragment?) {
         logout()
         startActivity(
-            Intent(this, LoginActivity::class.java)
+            Intent(
+                this,
+                LoginActivity::class.java
+            )
         )
         this.finish()
     }

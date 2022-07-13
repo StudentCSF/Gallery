@@ -8,5 +8,6 @@ data class Picture(
     @SerializedName("title") val title: String = "",
     @SerializedName("content") val content: String = "",
     @SerializedName("photoUrl") val photoUrl: String = "",
-    @SerializedName("publicationDate") val publicationDate: Int = -1
+    @SerializedName("publicationDate") val publicationDate: Long = -1,
+    val isLiked: Boolean = false
 ) : Serializable

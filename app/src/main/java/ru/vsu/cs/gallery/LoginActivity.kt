@@ -117,7 +117,7 @@ class LoginActivity : AppCompatActivity() {
 
                         startActivity(
                             Intent(
-                                applicationContext, ProfileFragment::class.java
+                                applicationContext, GalleryFragment::class.java
                             ).apply {
                                 putExtra("user", info?.userInfo)
                             }

@@ -11,8 +11,12 @@ import ru.vsu.cs.gallery.model.dto.response.AuthInfo
 interface UserApi {
 
     @POST("auth/login")
-    fun login(@Body request: LoginRequest): Call<AuthInfo>
+    fun login(
+        @Body request: LoginRequest
+    ): Call<AuthInfo>
 
     @POST("auth/logout")
-    fun logout(@Header("Authorization") token: String): Call<Void>
+    fun logout(
+        @Header("Authorization") token: String
+    ): Call<Void>
 }

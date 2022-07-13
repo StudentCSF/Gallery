@@ -3,6 +3,7 @@ package ru.vsu.cs.gallery.config
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.vsu.cs.gallery.api.PictureApi
 import ru.vsu.cs.gallery.api.UserApi
 
 class AppConfig {
@@ -21,5 +22,6 @@ class AppConfig {
             .build()
 
         val USER_API: UserApi = RETROFIT.create(UserApi::class.java)
+        val PICTURE_API: PictureApi = RETROFIT.create(PictureApi::class.java)
     }
 }
